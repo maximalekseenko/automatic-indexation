@@ -1,5 +1,6 @@
 ﻿using Filework;
 using Datawork;
+using Settings;
 
 
 
@@ -9,13 +10,12 @@ namespace Program
 
         public static void Main(string[] args)
         {
-            if (args.Length < 1) throw new Exception("Program expects file");
+            Settings.Settings.SetSettings(args);
 
 
-            var data = Filework.Filework.ReadFile(args[0]);
+            var data = Filework.Filework.ReadFile();
             data = Datawork.Datawork.Indexate(data);
-            Console.WriteLine(data);
-            Filework.Filework.WriteFile(args[0], data);
+            Filework.Filework.WriteFile(data);
         }
     }
 }

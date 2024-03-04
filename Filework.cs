@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Settings;
 
 
 namespace Filework
@@ -7,20 +8,19 @@ namespace Filework
     class Filework {
 
         /// <summary>
-        /// Reads json file
+        /// Reads json file and converts it's contents into JToken
         /// </summary>
-        /// <param name="filepath">path to file</param>
-        /// <returns>serialized json object or array</returns>
-        public static JToken ReadFile(string filepath) {
+        /// <returns>Serialized JToken from </returns>
+        public static JToken ReadFile() {
             string json;
-            using (StreamReader file = new StreamReader(filepath)) { json = file.ReadToEnd(); }
+            using (StreamReader file = new StreamReader(Settings.Settings.inputFilePath)) { json = file.ReadToEnd(); }
             JToken data = JObject.Parse(json);
             return data;
         }
 
 
-        public static void WriteFile(string filepath, JToken data) {
-            using (StreamWriter file = new StreamWriter(filepath)) { new JsonSerializer().Serialize(file, data); }
+        public static void WriteFile(JToken data) {
+            using (StreamWriter file = new StreamWriter(Settings.Settings.outputFilePath)) { new JsonSerializer().Serialize(file, data); }
         }
     }
 }
