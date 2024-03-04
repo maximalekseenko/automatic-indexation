@@ -1,8 +1,14 @@
 using Newtonsoft.Json.Linq;
 using Settings;
 
+/// <summary>
+/// 
+/// </summary>
 namespace Datawork
 {
+    /// <summary>
+    /// Here be
+    /// </summary>
     class Datawork
     {
 
@@ -12,7 +18,7 @@ namespace Datawork
         /// <param name="data">JToken to indexate</param>
         /// <param name="index">index of this JToken</param>
         /// <returns></returns>
-        public static JToken Indexate(JToken data, int index=0)
+        public static JToken Indexate(JToken data, int index = 0)
         {
             // check JTocken type and indexate correspondingly
             switch (data.Type)
@@ -24,7 +30,8 @@ namespace Datawork
                     data = IndexateObject(data as JObject, index);
                     break;
                 default:
-                    Console.WriteLine("unknown type: " + data.Type);
+                    if (Settings.Settings.doLogs) 
+                        Console.WriteLine("unknown type: " + data.Type);
                     break;
             }
 
@@ -38,8 +45,8 @@ namespace Datawork
         /// <param name="data">JToken to indexate</param>
         /// <param name="index">index of this JToken</param>
         /// <returns></returns>
-        private static JToken IndexateObject(JObject data, int index=0)
-        {   
+        private static JToken IndexateObject(JObject data, int index = 0)
+        {
             // add index to this JToken
             if (!data.ContainsKey(Settings.Settings.indexKey))
                 data.Add(Settings.Settings.indexKey, index);
@@ -47,7 +54,7 @@ namespace Datawork
             // iterate through values and indexate them if needed
             foreach (var item in data.Properties())
                 item.Value = Indexate(item.Value);
-                
+
             // return data after indexation
             return data;
         }
@@ -59,7 +66,7 @@ namespace Datawork
         /// <param name="data">JToken to indexate</param>
         /// <param name="index">index of this JToken</param>
         /// <returns></returns>
-        private static JToken IndexateArray(JArray data, int index=0)
+        private static JToken IndexateArray(JArray data, int index = 0)
         {
             // indexate contents if needed
             for (int i = 0; i < data.Count(); i++)

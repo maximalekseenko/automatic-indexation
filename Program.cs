@@ -15,6 +15,8 @@ namespace Program
 
             var data = Filework.Filework.ReadFile();
             data = Datawork.Datawork.Indexate(data);
+            if (Settings.Settings.doLogs)
+                Console.WriteLine("Final data is:\n" + data);
             Filework.Filework.WriteFile(data);
         }
     }
